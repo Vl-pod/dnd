@@ -1,0 +1,109 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #333;
+    background-color: rgb(156, 156, 231);
+}
+
+h1 {
+    padding-left: 4px;
+    font-size: 16px;
+    color: black;
+}
+
+.app_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    box-sizing: border-box;
+    padding: 8px;
+    width: 32.5%;
+    height: 1%;
+    border-radius: 10px;
+    background-color: rgb(213, 220, 232);
+}
+
+.task {
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 4px 5px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 2px 2px 5px gainsboro;
+}
+
+.task.dragged {
+    margin-bottom: 10px;
+    padding: 1px 4px;
+    border-radius: 8px;
+    position: absolute;
+    z-index: 999;
+    pointer-events: none;
+    background: #fff;
+
+}
+
+.add_card {
+    border: none;
+    background-color: inherit;
+    color: #999;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.textarea_task {
+    width: 97%;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    padding-top: 5px;
+    border-radius: 3px;
+    min-height: 60px;
+}
+
+.button_add {
+    background-color: rgb(61, 205, 61);
+    border: none;
+    border-radius: 8px;
+    padding: 5px 15px;
+    width: 150px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.span_closed {
+    display: inline-block;
+    cursor: pointer;
+    height: 30px;
+    margin-left: 15px;
+    font-weight: bold;
+    color: rgb(145, 150, 157);
+}
+
+.conainer_remove {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.shadow_element {
+    background-color: rgb(223, 91, 91);
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.closed_element {
+    position: absolute;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-left: -15px;
+    font-weight: bold;
+    color: red;
+}
+
+.display_none {
+    display: none;
+}
