@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 import Template from './template';
 import Storage from './storge';
 import addform from './addForm';
@@ -6,6 +7,8 @@ const render = new Template();
 const storage = new Storage();
 const loadData = storage.load();
 const dataTrello = {};
+let initialCursorX = 0;
+let initialCursorY = 0;
 
 if (loadData === null || loadData.toDo === undefined) {
   render.actionDefault();
@@ -57,9 +60,9 @@ let actualElement;
 
 const onMouseMove = (evt) => {
   const { target } = evt;
-
-  actualElement.style.top = `${evt.clientY - 20}px`;
-  actualElement.style.left = `${evt.clientX - 50}px`;
+  const { pageX, pageY } = evt;
+  actualElement.style.top = `${pageY - initialCursorY}px`;
+  actualElement.style.left = `${pageX - initialCursorX}px`;
 
   if (target.classList.contains('task') || target.classList.contains('title')) {
     const { y, height } = target.getBoundingClientRect();
@@ -92,8 +95,8 @@ const onTouchMove = (evt) => {
   const touch = evt.targetTouches[0];
   const { target } = evt;
 
-  actualElement.style.top = `${touch.pageY - 20}px`;
-  actualElement.style.left = `${touch.pageX - 50}px`;
+  actualElement.style.top = `${evt.clientY - initialCursorY}px`;
+  actualElement.style.left = `${evt.clientX - initialCursorX}px`;
 
   if ((touch.pageX + 20) < target.closest('.column').offsetLeft) {
     target.closest('.task').remove();
@@ -148,15 +151,16 @@ const onMouseUp = (e) => {
 
   actualElement.style.width = null;
   actualElement.style.height = null;
-
+  actualElement.style.top = null;
+  actualElement.style.left = null;
   actualElement.classList.remove('dragged');
   actualElement = undefined;
   storage.save(dataTrello);
+
   isSaveLokal();
   if (document.querySelector('.shadow_element')) {
     document.querySelector('.shadow_element').remove();
   }
-
   document.documentElement.removeEventListener('mousemove', onMouseMove);
   document.documentElement.removeEventListener('mouseup', onMouseUp);
 
@@ -173,10 +177,11 @@ document.addEventListener('touchmove', taskInFokus);
 const columns = Array.from(document.querySelectorAll('.column'));
 
 columns.forEach((item) => item.addEventListener('mousedown', (e) => {
-  if (e.target.closest('.task')) {
+  const { target } = e;
+  if (target.closest('.task')) {
     e.preventDefault();
 
-    actualElement = e.target.closest('.task');
+    actualElement = target.closest('.task');
     const { width, height } = actualElement.getBoundingClientRect();
     actualElement.classList.add('dragged');
     document.documentElement.style.cursor = 'grabbing';
@@ -186,9 +191,17 @@ columns.forEach((item) => item.addEventListener('mousedown', (e) => {
     if (document.querySelector('.closed_element')) {
       document.querySelector('.closed_element').remove();
     }
+    initialCursorX = e.offsetX;
+    initialCursorY = e.offsetY;
 
-    actualElement.style.width = `${width}px`;
-    actualElement.style.height = `${height}px`;
+    actualElement.style = `
+		 		left: ${e.pageX - initialCursorX}px;
+		 		top: ${e.pageY - initialCursorY}px;
+                width: ${width}px;
+                height: ${height}px;
+			`;
+    // actualElement.style.width = `${width}px`;
+    // actualElement.style.height = `${height}px`;
 
     document.documentElement.addEventListener('mousemove', onMouseMove);
     document.documentElement.addEventListener('mouseup', onMouseUp);
