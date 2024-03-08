@@ -16,6 +16,7 @@ if (loadData === null || loadData.toDo === undefined) {
   render.actionStorage(loadData);
 }
 
+
 function isSaveLokal() {
   const columnTodo = Array.from(document.querySelector('.todo').querySelectorAll('.task_text'));
   const columnInProgress = Array.from(document.querySelector('.in_progress').querySelectorAll('.task_text'));

@@ -1,5 +1,4 @@
 /* eslint-disable linebreak-style */
-
 function addform(element) {
   const form = document.createElement('div');
   const textarea = document.createElement('textarea');

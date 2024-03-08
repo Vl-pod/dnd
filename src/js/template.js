@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable class-methods-use-this */
-
 export default class Template {
   constructor() {
     this.columnTodo = document.querySelector('.todo');
